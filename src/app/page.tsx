@@ -1,10 +1,18 @@
-import prisma from "@/lib/db";
+"use client"
 
-const Home = async () => {
-  const users = await prisma.post.findMany()
+import { Button } from "@/components/ui/button";
+import { useTRPC } from "@/trpc/client";
+import { useMutation } from "@tanstack/react-query";
+
+
+const Home = () => {
+
+  const trpc = useTRPC();
+  const invoke = useMutation(trpc.invoke.mutationOptions({}));
+
   return (
     <div className="font-bold text-rose-500">
-      <h1>{JSON.stringify(users)}</h1>
+      <Button onClick={() => invoke.mutate({ text: "hello" })}>Hello</Button>
     </div>
   );
 };
